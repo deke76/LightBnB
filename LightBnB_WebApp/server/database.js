@@ -95,11 +95,12 @@ const getAllProperties = function(options, limit = 10) {
   let stringQuery = `
   SELECT properties.*, avg(property_reviews.rating) as average_rating 
   FROM properties
-  JOIN property_reviews ON property_id = properties.id`;
+  JOIN property_reviews ON property_id = properties.id
+  WHERE 1 = 1`;
 
   if (options.city) {
     values.push(`%${options.city}%`);
-    stringQuery += ` WHERE city LIKE $${values.length}`;
+    stringQuery += ` AND city LIKE $${values.length}`;
   }
   
   if (options.minimum_price_per_night) {
@@ -112,17 +113,21 @@ const getAllProperties = function(options, limit = 10) {
     stringQuery += ` AND cost_per_night <= $${values.length}`;
   }
 
+  stringQuery += ` GROUP BY properties.id`;
+  
   if (options.minimum_rating) {
     values.push(options.minimum_rating);
-    stringQuery += ` AND average_rating >= $${values.length}`;
+    stringQuery += ` HAVING avg(property_reviews.rating) >= $${values.length}`;
   }
   
   values.push(limit);
   stringQuery += `
-  GROUP BY properties.id
   ORDER BY cost_per_night
   LIMIT $${values.length};`;
 
+  console.log(stringQuery);
+  console.log(values);
+  
   return pool
     .query(stringQuery, values)
     .then((result) => result.rows)
@@ -137,9 +142,18 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function(property) {
-  const propertyId = Object.keys(properties).length + 1;
-  property.id = propertyId;
-  properties[propertyId] = property;
-  return Promise.resolve(property);
+  let values = Object.values(property);
+  let keys = Object.keys(property);
+  let stringQuery = `
+  INSERT INTO properties (${keys[0]}, ${keys[1]}, ${keys[2]}, ${keys[3]}, ${keys[4]}, ${keys[5]}, ${keys[6]}, ${keys[7]}, ${keys[8]}, ${keys[9]}, ${keys[10]}, ${keys[11]}, ${keys[12]}, ${keys[13]})
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+  RETURNING *;`;
+
+  console.log(property);
+  console.log(keys);
+  return pool
+    .query(stringQuery, values)
+    .then((result) => console.log(result))
+    .catch((err) => console.log('catch',err.message));
 };
 exports.addProperty = addProperty;
