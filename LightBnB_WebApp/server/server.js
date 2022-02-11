@@ -1,4 +1,4 @@
-const database = require('./db/database');
+const database = require('./db');
 const apiRoutes = require('./routes/apiRoutes');
 const userRoutes = require('./routes/userRoutes');
 
