@@ -1,3 +1,7 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-undef */
+/* eslint-env jquery */
+
 $(() => {
 
   const $logInForm = $(`

@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-env jquery */
+
 $(() => {
 
   const $propertyListings = $(`
@@ -9,22 +12,22 @@ $(() => {
 
   window.propertyListings = {};
 
-  function addListing(listing) {
+  const addListing = function(listing) {
     $propertyListings.append(listing);
-  }
-  function clearListings() {
+  };
+  const clearListings = function() {
     $propertyListings.empty();
-  }
+  };
   window.propertyListings.clearListings = clearListings;
 
-  function addProperties(properties, isReservation = false) {
+  const addProperties = function(properties, isReservation = false) {
     clearListings();
     for (const propertyId in properties) {
       const property = properties[propertyId];
       const listing = propertyListing.createListing(property, isReservation);
       addListing(listing);
     }
-  }
+  };
   window.propertyListings.addProperties = addProperties;
 
 });
