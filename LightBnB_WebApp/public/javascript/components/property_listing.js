@@ -21,9 +21,12 @@ $(() => {
             <li>Bathrooms: ${property.number_of_bathrooms}</li>
             <li>Parking Spaces: ${property.parking_spaces}</li>
           </ul>
-          ${isReservation
-              ? `<p>${moment(property.start_date).format('ll')} - ${moment(property.end_date).format('ll')}</p>`
-              : ``}
+          <div class='property-listing_reservation'>
+            ${isReservation
+                ? `<p>${moment(property.start_date).format('ll')} - ${moment(property.end_date).format('ll')}</p>`
+                : ``}
+            <button type='submit' value="Submit">Reserve</>
+          </div>
         </div>
       </section>
       <footer class="property-listing__footer">

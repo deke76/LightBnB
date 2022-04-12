@@ -39,6 +39,10 @@
   object-fit: fill;
 }
 .property-listing__details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   width: 50%;
 }
 .property-listing__footer {
