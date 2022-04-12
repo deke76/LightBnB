@@ -1,34 +1,37 @@
-function getMyDetails() {
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+
+const getMyDetails = function() {
   console.log("getMyDetails");
   return $.ajax({
     url: "/users/me",
-    });
-}
+  });
+};
 
-function logOut() {
+const logOut = function() {
   return $.ajax({
     method: "POST",
     url: "/users/logout",
-  })
-}
+  });
+};
 
-function logIn(data) {
+const logIn = function(data) {
   return $.ajax({
     method: "POST",
     url: "/users/login",
     data
   });
-}
+};
 
-function signUp(data) {
+const signUp = function(data) {
   return $.ajax({
     method: "POST",
     url: "/users",
     data
   });
-}
+};
 
-function getAllListings(params) {
+const getAllListings = function(params) {
   let url = "/api/properties";
   if (params) {
     url += "?" + params;
@@ -36,14 +39,14 @@ function getAllListings(params) {
   return $.ajax({
     url,
   });
-}
+};
 
-function getAllReservations() {
+const getAllReservations = function() {
   let url = "/api/reservations";
   return $.ajax({
     url,
   });
-}
+};
 
 const submitProperty = function(data) {
   return $.ajax({
@@ -51,4 +54,4 @@ const submitProperty = function(data) {
     url: "/api/properties",
     data,
   });
-}
+};
