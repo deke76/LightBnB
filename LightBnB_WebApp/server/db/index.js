@@ -93,9 +93,13 @@ const getAllProperties = function(options, limit = 10) {
   let stringQuery = `
   SELECT properties.*, avg(property_reviews.rating) as average_rating 
   FROM properties
-  JOIN property_reviews ON property_id = properties.id
+  LEFT JOIN property_reviews ON property_id = properties.id
   WHERE 1 = 1`;
 
+  if (options.owner_id) {
+    values.push(options.owner_id);
+    stringQuery += ` AND properties.owner_id = $${values.length}`;
+  }
   if (options.city) {
     values.push(`%${options.city}%`);
     stringQuery += ` AND city LIKE $${values.length}`;
@@ -122,13 +126,31 @@ const getAllProperties = function(options, limit = 10) {
   stringQuery += `
   ORDER BY cost_per_night
   LIMIT $${values.length};`;
-
+  console.log(stringQuery, values[0], values[1]);
   return pool
     .query(stringQuery, values)
     .then((result) => result.rows)
     .catch((err) => console.log(err.message));
 };
 exports.getAllProperties = getAllProperties;
+
+
+/**
+ * Get user properties.
+ * @param {{string}} ownerID An object containing query options.
+ * @return {Promise<[{}]>}  A promise to the properties.
+ **/
+const getUserProperties = function(ownerID) {
+  const values = [ownerID];
+  const stringQuery =
+    `SELECT * FROM PROPERTIES WHERE owner_id = $1;`;
+
+  return pool
+    .query(stringQuery, values)
+    .then(result => result.rows)
+    .catch(err => console.log(err.message));
+};
+exports.getUserProperties = getUserProperties;
 
 
 /**

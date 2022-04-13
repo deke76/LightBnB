@@ -25,7 +25,7 @@ $(() => {
             ${isReservation
                 ? `<p>${moment(property.start_date).format('ll')} - ${moment(property.end_date).format('ll')}</p>`
                 : ``}
-            <button type='submit' value="Submit">Reserve</>
+            <button type='submit' value='${property.title}' id="reservation-Button">Reserve</>
           </div>
         </div>
       </section>
@@ -38,5 +38,12 @@ $(() => {
   };
 
   window.propertyListing.createListing = createListing;
+
+  $("body").on("click", '#reservation-Button', function(event) {
+    const data = $(this).attr("data");
+    console.log('reservation button clicked', event.target.value);
+    views_manager.show('reserveProperty');
+    return false;
+  });
 
 });

@@ -49,6 +49,7 @@ const getAllReservations = function() {
 };
 
 const submitProperty = function(data) {
+  console.log(data);
   return $.ajax({
     method: "POST",
     url: "/api/properties",
