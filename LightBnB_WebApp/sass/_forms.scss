@@ -1,6 +1,5 @@
 .search-property-form, .login-form,
-.new-property-form, .sign-up-form,
-.reservation-form {
+.new-property-form, .sign-up-form {
   max-width: 400px;
   display: flex;
   flex-direction: column;
@@ -10,7 +9,7 @@
   &__field-wrapper {
     width: 100%;
     display: flex;
-    justify-content: center;;
+    justify-content: center;
   }
 
   label {
@@ -20,10 +19,6 @@
   textarea, select, input, label {
     margin: 5px 5px;
     width: 100%;
-  }
-
-  button {
-    margin-right: 2px;
   }
 
   a {

@@ -59,6 +59,7 @@ $(() => {
       })
       .catch(error => console.error(error));
   });
+  
   $("header").on("click", '.my_listing_button', function() {
     propertyListings.clearListings();
     getAllListings(`owner_id=${currentUser.id}`)

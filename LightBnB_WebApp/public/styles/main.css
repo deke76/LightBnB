@@ -42,15 +42,53 @@
 .property-listing__details {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 50%;
+}
+.property-listing__reservation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .property-listing__footer {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: 100%;
   padding: 10px;
+}
+
+.reservation-form__dates {
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+}
+.reservation-form__show {
+  box-sizing: border-box;
+  width: 100%;
+  visibility: visible;
+}
+.reservation-form fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.reservation-form__input {
+  display: block;
+  margin: 2px;
+  padding: 2px;
+  width: 90%;
+}
+.reservation-form__controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.reservation-form button {
+  margin: 2px;
 }
 
 @media screen and (max-width: 400px) {
@@ -60,8 +98,7 @@
   }
 }
 .search-property-form, .login-form,
-.new-property-form, .sign-up-form,
-.reservation-form {
+.new-property-form, .sign-up-form {
   max-width: 400px;
   display: flex;
   flex-direction: column;
@@ -69,37 +106,25 @@
   margin: 4em auto auto auto;
 }
 .search-property-form__field-wrapper, .login-form__field-wrapper,
-.new-property-form__field-wrapper, .sign-up-form__field-wrapper,
-.reservation-form__field-wrapper {
+.new-property-form__field-wrapper, .sign-up-form__field-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 .search-property-form label, .login-form label,
-.new-property-form label, .sign-up-form label,
-.reservation-form label {
+.new-property-form label, .sign-up-form label {
   display: none;
 }
 .search-property-form textarea, .search-property-form select, .search-property-form input, .search-property-form label, .login-form textarea, .login-form select, .login-form input, .login-form label,
 .new-property-form textarea,
 .new-property-form select,
 .new-property-form input,
-.new-property-form label, .sign-up-form textarea, .sign-up-form select, .sign-up-form input, .sign-up-form label,
-.reservation-form textarea,
-.reservation-form select,
-.reservation-form input,
-.reservation-form label {
+.new-property-form label, .sign-up-form textarea, .sign-up-form select, .sign-up-form input, .sign-up-form label {
   margin: 5px 5px;
   width: 100%;
 }
-.search-property-form button, .login-form button,
-.new-property-form button, .sign-up-form button,
-.reservation-form button {
-  margin-right: 2px;
-}
 .search-property-form a, .login-form a,
-.new-property-form a, .sign-up-form a,
-.reservation-form a {
+.new-property-form a, .sign-up-form a {
   margin-left: 2px;
 }
 
