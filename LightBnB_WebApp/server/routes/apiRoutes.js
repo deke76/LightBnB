@@ -27,13 +27,18 @@ module.exports = function(router, database) {
     const userId = req.session.userId;
     database.addProperty({...req.body, owner_id: userId})
       .then(property => {
-        console.log(property);
+        // console.log(property);
         res.send(property);
       })
       .catch(e => {
         console.error(e);
         res.send(e);
       });
+  });
+
+  router.post('/reservations', (req, res) => {
+    const userId = req.session.userId;
+    console.log(req.body);
   });
 
   return router;
