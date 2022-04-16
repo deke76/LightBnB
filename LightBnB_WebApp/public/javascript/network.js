@@ -66,10 +66,10 @@ const submitReservation = function(data) {
 };
 
 const cancelReservation = function(data) {
-  // let url = `/api/reservations`;
-  // return $.ajax({
-  //   method: "DELETE",
-  //   url,
-  //   data,
-  // });
+  let url = `/api/reservations`;
+  return $.ajax({
+    method: "DELETE",
+    url,
+    data,
+  });
 };

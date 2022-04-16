@@ -64,7 +64,6 @@ $(() => {
     propertyListings.clearListings();
     getAllListings(`owner_id=${currentUser.id}`)
       .then(function(json) {
-        console.log(json);
         propertyListings.addProperties(json.properties);
         views_manager.show('listings');
       });

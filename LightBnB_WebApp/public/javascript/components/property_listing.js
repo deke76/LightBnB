@@ -11,6 +11,9 @@ $(() => {
     <article class="property-listing">
       <header class="property-listing__heading">
         <h3>${property.title}</h3>
+        <div>
+          <button></button>
+          <button><i class="fa fa-trash-o"></i></button>
       </header>
       <section class="property-listing__content">
         <div class="property-listing__preview-image">
@@ -28,13 +31,13 @@ $(() => {
           <div class='property-listing__reservation'>
             <form action="/api/reservations" method="post" class="reservation-form" id="reservation-property-form-${property.id}">
               ${isReservation
-                ? `<button id='reservation-delete' class="reservation-form__show" value="${property.id}">Cancel</button>`
+                ? `<button id='reservation-delete' class="reservation-form__show">Cancel</button>`
                 : `<button id='reservation-show-controls' class="reservation-form__show">Reserve</button>` }
               <fieldset class="reservation-form__dates">
                 <label for="start-date">Start Date</label>
-                <input type="date" name="start_date" placeholder="Start Date" id="reservation-form__start-date" class="reservation-form__input" />
+                <input type="date" name="start_date" value="${moment(property.start_date).format('YYYY-MM-DD')}" id="reservation-form__start-date" class="reservation-form__input" />
                 <label for="end-date">End Date</label>
-                <input type="date" name="end_date" placeholder="End Date" id="reservation-form__end-date" class="reservation-form__input" />
+                <input type="date" name="end_date" value="${moment(property.end_date).format('YYYY-MM-DD')}" id="reservation-form__end-date" class="reservation-form__input" />
                 <input type="hidden" name="property_id" value="${property.id}" />
                 <fieldset class='reservation-form__controls'>
                   <button type='submit' id="reservation-submit">Submit</button>
@@ -79,7 +82,6 @@ $(() => {
     propertyListings.clearListings();
     getAllReservations()
       .then(function(json) {
-        console.log(json);
         propertyListings.addProperties(json.reservations, true);
         views_manager.show('listings');
       })
@@ -88,6 +90,13 @@ $(() => {
 
   $("body").on("click", '#reservation-delete', event => {
     event.preventDefault();
-    cancelReservation(event);
+    const data = $(event.target.form).serialize()
+    cancelReservation(data)
+      .then(getAllReservations()
+        .then(function(json) {
+          propertyListings.addProperties(json.reservations, true);
+          views_manager.show('listings');
+        }))
+      .catch(error => console.error(error));
   });
 });

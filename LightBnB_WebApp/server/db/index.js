@@ -92,9 +92,9 @@ const addReservation = function(reservation) {
   let values = Object.values(reservation);
   let keys = Object.keys(reservation);
   let stringQuery = `
-  INSERT INTO reservations (${keys[0]}, ${keys[1]}, ${keys[2]}, ${keys[3]})
-  VALUES ($1, $2, $3, $4)
-  RETURNING *;`;
+    INSERT INTO reservations (${keys[0]}, ${keys[1]}, ${keys[2]}, ${keys[3]})
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;`;
   return pool
     .query(stringQuery, values)
     .then((result) => console.log(result))
@@ -103,10 +103,25 @@ const addReservation = function(reservation) {
 exports.addReservation = addReservation;
 
 /**
- * ns 
- * @param {{}} reservation_id 
- * @returns 
+ * Delete a reservation
+ * @param {{}} reservation An object containing the reservation details 
+ * @returns
  */
+const cancelReservation = function(reservation) {
+  let values = Object.values(reservation);
+  let keys = Object.keys(reservation);
+  let stringQuery = `
+    DELETE FROM reservations
+    WHERE ${keys[0]} = $1
+    AND ${keys[1]} = $2
+    AND ${keys[2]} = $3
+    AND ${keys[3]} = $4;`;
+  return pool
+    .query(stringQuery, values)
+    .then(result => console.log(result))
+    .catch(err => console.log('catch', err.message));
+};
+exports.cancelReservation = cancelReservation;
 
 /// Properties
 

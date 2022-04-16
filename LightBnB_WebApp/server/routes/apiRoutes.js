@@ -50,6 +50,13 @@ module.exports = function(router, database) {
 
   router.delete('/reservations', (req, res) => {
     console.log(req.body);
+    const userId = req.session.userId;
+    database.cancelReservation({...req.body, guest_id: userId})
+      .then(() => res.send("Reservation cancelled"))
+      .catch(e => {
+        console.error(e);
+        res.send(e);
+      });
   });
 
   return router;
