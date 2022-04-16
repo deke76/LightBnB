@@ -67,9 +67,13 @@ exports.addUser = addUser;
 const getAllReservations = function(guestID, limit = 10) {
   let values = [guestID, limit];
   let stringQuery = `
-  SELECT * FROM properties
-  JOIN reservations ON property_id = properties.id
-  WHERE guest_id = $1 
+  SELECT properties.*, avg(property_reviews.rating) as average_rating, reservations.start_date, reservations.end_date 
+  FROM properties
+  LEFT JOIN reservations ON reservations.property_id = properties.id
+  LEFT JOIN property_reviews ON property_reviews.property_id = properties.id
+  WHERE reservations.guest_id = $1
+  GROUP BY properties.id, reservations.start_date, reservations.end_date
+  ORDER BY reservations.start_date
   LIMIT $2;`;
 
   return pool
@@ -78,6 +82,31 @@ const getAllReservations = function(guestID, limit = 10) {
     .catch((err) => console.log(err.message));
 };
 exports.getAllReservations = getAllReservations;
+
+/**
+ * Add a reservation for logged in user
+ * @param {{}} reservation An object containing reservation details
+ * @returns {Promise<[{}]>} A promise to the reservation
+ */
+const addReservation = function(reservation) {
+  let values = Object.values(reservation);
+  let keys = Object.keys(reservation);
+  let stringQuery = `
+  INSERT INTO reservations (${keys[0]}, ${keys[1]}, ${keys[2]}, ${keys[3]})
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;`;
+  return pool
+    .query(stringQuery, values)
+    .then((result) => console.log(result))
+    .catch((err) => console.log('catch',err.message));
+};
+exports.addReservation = addReservation;
+
+/**
+ * ns 
+ * @param {{}} reservation_id 
+ * @returns 
+ */
 
 /// Properties
 
@@ -169,7 +198,7 @@ const addProperty = function(property) {
   console.log(keys);
   return pool
     .query(stringQuery, values)
-    .then((result) => console.log(result))
+    .then((result) => result.rows)
     .catch((err) => console.log('catch',err.message));
 };
 exports.addProperty = addProperty;

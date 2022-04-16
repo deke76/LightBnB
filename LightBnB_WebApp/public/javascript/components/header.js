@@ -64,6 +64,7 @@ $(() => {
     propertyListings.clearListings();
     getAllListings(`owner_id=${currentUser.id}`)
       .then(function(json) {
+        console.log(json);
         propertyListings.addProperties(json.properties);
         views_manager.show('listings');
       });
@@ -85,9 +86,11 @@ $(() => {
   $("header").on('click', '.login_button', () => {
     views_manager.show('logIn');
   });
+
   $("header").on('click', '.sign-up_button', () => {
     views_manager.show('signUp');
   });
+
   $("header").on('click', '.logout_button', () => {
     logOut().then(() => {
       header.update(null);

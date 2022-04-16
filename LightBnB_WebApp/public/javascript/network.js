@@ -2,7 +2,6 @@
 /* eslint-disable no-undef */
 
 const getMyDetails = function() {
-  console.log("getMyDetails");
   return $.ajax({
     url: "/users/me",
   });
@@ -58,11 +57,19 @@ const submitProperty = function(data) {
 };
 
 const submitReservation = function(data) {
-  console.log(data);
+  let url = "api/reservations"
   return $.ajax({
     method: "POST",
-    url: "/api/reservations",
+    url,
     data,
   });
+};
 
+const cancelReservation = function(data) {
+  // let url = `/api/reservations`;
+  // return $.ajax({
+  //   method: "DELETE",
+  //   url,
+  //   data,
+  // });
 };

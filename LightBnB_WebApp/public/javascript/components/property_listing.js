@@ -23,11 +23,13 @@ $(() => {
             <li>Parking Spaces: ${property.parking_spaces}</li>
           </ul>
           ${isReservation
-                ? `<p>${moment(property.start_date).format('ll')} - ${moment(property.end_date).format('ll')}</p>`
-                : ``}
+              ? `<p>${moment(property.start_date).format('ll')} - ${moment(property.end_date).format('ll')}</p>`
+              : ``}
           <div class='property-listing__reservation'>
             <form action="/api/reservations" method="post" class="reservation-form" id="reservation-property-form-${property.id}">
-              <button id='reservation-show-controls' class="reservation-form__show">Reserve</button>
+              ${isReservation
+                ? `<button id='reservation-delete' class="reservation-form__show" value="${property.id}">Cancel</button>`
+                : `<button id='reservation-show-controls' class="reservation-form__show">Reserve</button>` }
               <fieldset class="reservation-form__dates">
                 <label for="start-date">Start Date</label>
                 <input type="date" name="start_date" placeholder="Start Date" id="reservation-form__start-date" class="reservation-form__input" />
@@ -45,12 +47,11 @@ $(() => {
       </section>
       <footer class="property-listing__footer">
         <div class="property-listing__rating">${Math.round(property.average_rating * 100) / 100} / 5 stars</div>
-        <div class="property-listing__price">$${property.cost_per_night / 100.0} / night</div>
+        <div class="property-listing__price">$${property.cost_per_night} / night</div>
       </footer>
     </article>
     `;
   };
-
   window.propertyListing.createListing = createListing;
 
   $("body").on("click", '#reservation-show-controls', event => {
@@ -74,8 +75,19 @@ $(() => {
   $("body").on("click", '#reservation-submit', event => {
     event.preventDefault();
     const data = $(event.target.form).serialize();
-    console.log(data);
     submitReservation(data);
-    
+    propertyListings.clearListings();
+    getAllReservations()
+      .then(function(json) {
+        console.log(json);
+        propertyListings.addProperties(json.reservations, true);
+        views_manager.show('listings');
+      })
+      .catch(error => console.error(error));
+  });
+
+  $("body").on("click", '#reservation-delete', event => {
+    event.preventDefault();
+    cancelReservation(event);
   });
 });
