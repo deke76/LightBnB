@@ -110,6 +110,7 @@ $(() => {
     console.log(data);
     submitProperty(data)
       .then(() => {
+        console.log('property created')
         views_manager.show('listings');
       })
       .catch((error) => {

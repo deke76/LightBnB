@@ -21,9 +21,11 @@
   &__heading {
     display: flex;
     justify-content: center;
+    align-items:center;
     font-size: 1.0rem;
     width: 100%;
     height: 15%;
+    background-color: lightcyan;
   }
 
   &__content {
@@ -62,7 +64,8 @@
     align-items: center;
     width: 100%;
     padding: 10px;
-
+    background-color: lightcyan;
+    box-sizing: border-box;
   }
 }
 

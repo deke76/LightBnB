@@ -13,7 +13,7 @@ $(() => {
         <h3>${property.title}</h3>
         ${document.cookie != property.owner_id
           ? ''
-          : `<span><i class="fa-solid fa-pen" id=${property.id}></i></span><span><i class="fa-solid fa-trash" id=${property.id}></i></span>`
+          : `&nbsp&nbsp<i class="fa-solid fa-trash" id=${property.id}></i>`
         }
       </header>
       <section class="property-listing__content">
@@ -109,8 +109,15 @@ $(() => {
 
   $("body").on("click", '.fa-trash', event => {
     console.log('Delete clicked');
-    console.log(event.target.id);
-    deleteProperty(event.target.id);
-
+    const data = {property_id: event.target.id};
+    deleteProperty(data)
+      .then(() => {
+        getAllReservations()
+        .then(function(json) {
+          propertyListings.addProperties(json.reservations, true);
+          views_manager.show('listings');
+        });
+      })
+      .catch(error => console.error(error));
   });
-});
+})
