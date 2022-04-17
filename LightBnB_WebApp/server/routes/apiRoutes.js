@@ -23,8 +23,15 @@ module.exports = function(router, database) {
   });
 
   router.delete('/properties', (req, res) => {
-    console.log(req.body);
-  })
+    console.log(req.body.property_id);
+    const userId = req.session.userId;
+    database.deleteProperty(req.body.property_id)
+      .then(() => res.send({message: 'Property deleted', user_id: userId}))
+      .catch(e => {
+        console.log(e);
+        res.send(e);
+      });
+  });
 
   router.get('/reservations', (req, res) => {
     const userId = req.session.userId;

@@ -88,7 +88,6 @@ $(() => {
         
     </form>
   `);
-
   window.$newPropertyForm = $newPropertyForm;
 
   $newPropertyForm.addressfield({

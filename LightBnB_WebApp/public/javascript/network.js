@@ -56,6 +56,7 @@ const submitProperty = function(data) {
 };
 
 const deleteProperty = function(data) {
+  console.log(data);
   return $.ajax({
     method: "DELETE",
     url: "/api/properties",
@@ -73,6 +74,7 @@ const submitReservation = function(data) {
 };
 
 const cancelReservation = function(data) {
+  console.log(data);
   let url = `/api/reservations`;
   return $.ajax({
     method: "DELETE",

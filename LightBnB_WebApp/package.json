@@ -19,8 +19,5 @@
     "express": "^4.17.2",
     "nodemon": "^1.19.4",
     "pg": "^8.7.3"
-  },
-  "devDependencies": {
-    "node-sass": "^7.0.1"
   }
 }
