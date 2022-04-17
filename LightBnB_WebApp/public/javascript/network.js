@@ -48,7 +48,6 @@ const getAllReservations = function() {
 };
 
 const submitProperty = function(data) {
-  console.log(data);
   return $.ajax({
     method: "POST",
     url: "/api/properties",
@@ -56,8 +55,16 @@ const submitProperty = function(data) {
   });
 };
 
+const deleteProperty = function(data) {
+  return $.ajax({
+    method: "DELETE",
+    url: "/api/properties",
+    data,
+  });
+};
+
 const submitReservation = function(data) {
-  let url = "api/reservations"
+  let url = "api/reservations";
   return $.ajax({
     method: "POST",
     url,

@@ -11,9 +11,10 @@ $(() => {
     <article class="property-listing">
       <header class="property-listing__heading">
         <h3>${property.title}</h3>
-        <div>
-          <button></button>
-          <button><i class="fa fa-trash-o"></i></button>
+        ${document.cookie != property.owner_id
+          ? ''
+          : `<span><i class="fa-solid fa-pen" id=${property.id}></i></span><span><i class="fa-solid fa-trash" id=${property.id}></i></span>`
+        }
       </header>
       <section class="property-listing__content">
         <div class="property-listing__preview-image">
@@ -27,7 +28,8 @@ $(() => {
           </ul>
           ${isReservation
               ? `<p>${moment(property.start_date).format('ll')} - ${moment(property.end_date).format('ll')}</p>`
-              : ``}
+              : ``
+            }
           <div class='property-listing__reservation'>
             <form action="/api/reservations" method="post" class="reservation-form" id="reservation-property-form-${property.id}">
               ${isReservation
@@ -98,5 +100,17 @@ $(() => {
           views_manager.show('listings');
         }))
       .catch(error => console.error(error));
+  });
+
+  $("body").on("click", '.fa-pen', event => {
+    console.log('Edit clicked');
+    console.log(event.target.id);
+  });
+
+  $("body").on("click", '.fa-trash', event => {
+    console.log('Delete clicked');
+    console.log(event.target.id);
+    deleteProperty(event.target.id);
+
   });
 });

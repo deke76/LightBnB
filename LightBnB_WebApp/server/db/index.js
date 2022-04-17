@@ -195,7 +195,6 @@ const getUserProperties = function(ownerID) {
 };
 exports.getUserProperties = getUserProperties;
 
-
 /**
  * Add a property to the database
  * @param {{}} property An object containing all of the property details.
@@ -217,3 +216,21 @@ const addProperty = function(property) {
     .catch((err) => console.log('catch',err.message));
 };
 exports.addProperty = addProperty;
+
+/**
+ * Delete a user property from database
+ * @param {} id property.id to be deleted
+ * return
+ */
+const deleteProperty = function(propertyId) {
+  const values = [propertyId];
+  console.log('deleting property');
+  const stringQuery = `
+    DELETE FROM properties
+    WHERE id = $1;`;
+  return pool
+    .query(stringQuery, values)
+    .then(result => console.log(result))
+    .catch(err => console.log('catch', err.message));
+};
+exports.deleteProperty = deleteProperty;

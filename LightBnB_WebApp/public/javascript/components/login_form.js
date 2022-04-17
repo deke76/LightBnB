@@ -21,14 +21,12 @@ $(() => {
       </div>
     </form>
   `);
-
   window.$logInForm = $logInForm;
 
   $logInForm.on('submit', function(event) {
     event.preventDefault();
 
     const data = $(this).serialize();
-    console.log(data);
     logIn(data)
       .then(json => {
         console.log(json);
@@ -36,7 +34,8 @@ $(() => {
           views_manager.show('error', 'Failed to login');
           return;
         }
-        console.log(json.user);
+        document.cookie = json.user.id;
+        console.log(document.session);
         header.update(json.user);
         views_manager.show('listings');
       });
